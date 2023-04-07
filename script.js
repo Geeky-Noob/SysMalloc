@@ -29,7 +29,7 @@ function login(e) {
   var pswrd = login_form.password1.value;
   var body = { username: name, password: pswrd };
   fetch(
-    `http://10.194.45.228:5000/user_login?name1=${name}&password1=${pswrd}`,
+    `http://10.17.50.149:5000/user_login?name1=${name}&password1=${pswrd}`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -64,7 +64,7 @@ function signup(e) {
   var email = signup_form.email2.value;
   var pswrd = signup_form.password2.value;
   var body = { name2: name, password2: pswrd };
-  fetch(`http://10.194.45.228:5000/user_signup`, {
+  fetch(`http://10.17.50.149:5000/user_signup`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -94,7 +94,7 @@ function ask_ques(e) {
     tagname: tags,
     authorname: username,
   };
-  fetch(`http://10.194.45.228:5000/question`, {
+  fetch(`http://10.17.50.149:5000/question`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -118,10 +118,11 @@ function get_particular_ques(title) {
 }
 
 if (
-  window.location.href == "http://127.0.0.1:5500/particular_question_page.html"
+  window.location.href ==
+  "http://10.17.50.149:4242/particular_question_page.html"
 ) {
   var q_req = localStorage.getItem("get_ques");
-  fetch(`http://10.194.45.228:5000/question_title?title=${q_req}`, {
+  fetch(`http://10.17.50.149:5000/question_title?title=${q_req}`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -166,7 +167,7 @@ function edit_profile() {
     edit_location: new_location,
     authorname: username,
   };
-  fetch(`http://10.54.9.54:5000/user_signup`, {
+  fetch(`http://10.17.50.149:5000/user_signup`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -208,9 +209,9 @@ function delete_ques() {
     .catch((error) => console.error(error));
 }
 
-if (window.location.href == "http://127.0.0.1:5500/all_users_page.html") {
+if (window.location.href == "http://10.17.50.149:4242/all_users_page.html") {
   //how to write this for every user URL SPECIFICICATION
-  const url = "http://10.194.45.228:5000/users_list";
+  const url = "http://10.17.50.149:5000/users_list";
   fetch(url, {
     headers: {
       "Content-Type": "application/json",
@@ -238,11 +239,11 @@ if (window.location.href == "http://127.0.0.1:5500/all_users_page.html") {
 }
 
 if (
-  window.location.href == "http://127.0.0.1:5500/all_questions_page.html" ||
-  window.location.href == "http://127.0.0.1:5500/users_page.html"
+  window.location.href == "http://10.17.50.149:4242/all_questions_page.html" ||
+  window.location.href == "http://10.17.50.149:4242/users_page.html"
 ) {
   //how to write this for every user URL SPECIFICICATION
-  const url = "http://10.194.45.228:5000/question"; // api url daalna hai
+  const url = "http://10.17.50.149:5000/question"; // api url daalna hai
   fetch(url, {
     headers: {
       "Content-Type": "application/json",
@@ -284,7 +285,7 @@ if (
 }
 
 function sort_newest() {
-  const url = "http://10.194.45.228:5000/question"; // api url daalna hai
+  const url = "http://10.17.50.149:5000/question"; // api url daalna hai
   fetch(url, {
     headers: {
       "Content-Type": "application/json",
@@ -514,7 +515,7 @@ function usersbookmarks() {
 }
 if (
   window.location.href ==
-  "http://127.0.0.1:5500/users_profile_page_bookmarks.html"
+  "http://10.17.50.149:4242/users_profile_page_bookmarks.html"
 ) {
   //how to write this for every user URL SPECIFICICATION
   const url = ""; // api url daalna hai
@@ -560,7 +561,7 @@ function post_ans(e) {
   var ans = post_ans_form.post_ans.value;
   var username = localStorage.getItem("username");
   var body = { username: username, title: title, ans: ans };
-  fetch("http://10.194.45.228:5000/answers", {
+  fetch("http://10.17.50.149:5000/answers", {
     headers: {
       "Content-Type": "application/json",
     },
