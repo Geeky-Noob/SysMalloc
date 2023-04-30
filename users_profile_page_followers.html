@@ -16,10 +16,12 @@
         <div class="nav-image" align-items-center>
           <img src="assets/logo.png" alt="SysMalloc" />
         </div>
-        <p class="nav-name"><a href="users_page.html">SysMalloc</a></p>
+        <p class="nav-name"><a href="all_questions_page.html">SysMalloc</a></p>
       </div>
       <div class="nav-search">
-        <input class="search" type="text" placeholder="Search" />
+        <form class="search_bar_form" onsubmit="return search_bar(event)">
+          <input class="search" type="text" placeholder="Search" name="search"/>
+        </form>
       </div>
       <a class="nav-username" href="user_profile_page.html">username</a>
       <div class="medal" align-items-center>
@@ -58,19 +60,19 @@
       <div class="buttons">
         <button class="followers">Followers</button>
         <button class="following" onclick="usersfollowing()">Following</button>
-        <button class="feed" onclick="usersfeed()">Feed</button>
-        <button class="bookmarks" onclick="usersbookmarks()">Bookmarks</button>
+        <!-- <button class="feed" onclick="usersfeed()">Feed</button> -->
+        
       </div>
       <div class="profiletitle">Followers</div>
       <div class="parent">
-        <div class="particular_user">
+        <!-- <div class="particular_user">
           <div class="particular_user_image"><img src="assets/default.png" /></div>
           <div class="particular_user_details">
             <div class="particular_username"><a href="userpage_from_allusers.html" class="name_link">Mozway</a></div>
             <div class="particular_rating">6561</div>
             <div class="particular_location">Edinburgh</div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <footer>

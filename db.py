@@ -4,8 +4,8 @@ from typing import Optional
 import pymysql
 
 connection = pymysql.connect(host='localhost',
-                             user='newuser',
-                             password='password',
+                             user='root',
+                             password='IITk@1stkaam',
                              database='sysmalloc',
                              cursorclass=pymysql.cursors.DictCursor)
 
@@ -36,7 +36,7 @@ def setup():
       cursor.execute("""CREATE TABLE IF NOT EXISTS `comments` (
         `commentid` int NOT NULL AUTO_INCREMENT,
         `body` varchar(1500),
-        `authorid` int NOT NULL DEFAULT 0,
+        `authorid` int NOT NULL,
         `questionid` int DEFAULT NULL,
         `answerid` int DEFAULT NULL,
         PRIMARY KEY (`commentid`)
@@ -45,17 +45,17 @@ def setup():
       cursor.execute("""CREATE TABLE IF NOT EXISTS `answers` (
         `answerid` int NOT NULL AUTO_INCREMENT,
         `body` varchar(3000),
-        `authorid` int NOT NULL DEFAULT 0,
+        `authorname` varchar(255) NOT NULL,
         `questionid` int DEFAULT NULL,
         `upvotes` int DEFAULT 0,
         `downvotes` int DEFAULT 0,
         PRIMARY KEY (`answerid`)
       )""")
-      cursor.execute("""CREATE TABLE IF NOT EXISTS `questions2` (
+      cursor.execute("""CREATE TABLE IF NOT EXISTS `questions` (
         `questionid` int NOT NULL AUTO_INCREMENT,
         `title` varchar(400),
         `body` varchar(3000),
-        `maker` varchar(255) DEFAULT 'anan  ymous',
+        `authorname` varchar(255) NOT NULL,
         `upvotes` int DEFAULT 0,
         `downvotes` int DEFAULT 0,
         `answers` int DEFAULT 0,
@@ -63,8 +63,8 @@ def setup():
         
       )""")
       cursor.execute("""CREATE TABLE IF NOT EXISTS `followers` (
-        `followerid` int NOT NULL,
-        `followeeid` int NOT NULL
+        `followername` varchar(255) NOT NULL,
+        `followeename` varchar(255) NOT NULL
       )""")
       cursor.execute("""CREATE TABLE IF NOT EXISTS `tags` (
         `tagname` int NOT NULL,
@@ -111,6 +111,15 @@ def get_question_from_id(id):
       return None
     return r
 
+def find_question(query):
+  with connection.cursor() as cursor:
+    sql = """SELECT * FROM `questions` WHERE `title` like %s"""
+    cursor.execute(sql, (query))
+    r = cursor.fetchall()
+    if r is None:
+      return None
+    return r
+
 
 def get_all_users():
   with connection.cursor() as cursor:
@@ -128,63 +137,200 @@ def add_user(user):
     sql = """SELECT * FROM `users` WHERE `username`=%s"""
     cursor.execute(sql, (user["username"]))
     r = cursor.fetchone()
-    # print(r)
+    print(r)
     if r == None:
      sql = f"INSERT INTO users (username,password) VALUES (%s,%s)"
      cursor.execute(sql, (user["username"],user["password"]))
      connection.commit()
      return True
     else:
+      print("dsfjhjl")
       return False
       
-# def add_question(question):
+def add_question(question):
 
-#   with connection.cursor() as cursor:
+  with connection.cursor() as cursor:
 
-    #  sql = f"""SELECT `questionid` FROM `questions` WHERE `title`=%s"""
-    #  cursor.execute(sql, (question["title"]))
-    #  r1 = cursor.fetchone()
-    #  sql = f"""SELECT `userid` FROM `users` WHERE `username`=%s"""
-    #  cursor.execute(sql, (question["username"]))
-    #  r2 = cursor.fetchone()
-    #  sql = f"INSERT INTO questions (body,title,maker) VALUES (%s,%s,%s)"
-    #  cursor.execute(sql, (question["body"],question["title"],question["username"]))
-    #  connection.commit()
-    #  return True
+     sql = f"""SELECT `questionid` FROM `questions` WHERE `title`=%s"""
+     cursor.execute(sql, (question["title"]))
+     r1 = cursor.fetchone()
+     sql = f"""SELECT `userid` FROM `users` WHERE `username`=%s"""
+     cursor.execute(sql, (question["username"]))
+     r2 = cursor.fetchone()
+     sql = f"INSERT INTO questions (authorid,body,questionid)VALUES (%s,%s,%s)"
+     
+     cursor.execute(sql, (r2["userid"],question["body"],r1["questionid"]))
+     connection.commit()
+     return True
 
 def add_question(question):
 
   with connection.cursor() as cursor:
-      
-     sql = f"INSERT INTO questions2 (title,body,maker)VALUES (%s,%s,%s)"
-     cursor.execute(sql, (question["title"],question["body"],question["username"]))
+
+     sql = f"""SELECT `questionid` FROM `questions` WHERE `title`=%s"""
+     cursor.execute(sql, (question["title"]))
+     r1 = cursor.fetchone()
+     sql = f"""SELECT `userid` FROM `users` WHERE `username`=%s"""
+     cursor.execute(sql, (question["username"]))
+     r2 = cursor.fetchone()
+     sql = f"INSERT INTO questions (authorid,body,questionid)VALUES (%s,%s,%s)"
+     
+     cursor.execute(sql, (r2["userid"],question["body"],r1["questionid"]))
+     connection.commit()
+     return True
+def get_ans_from_ques(quesid):
+  with connection.cursor() as cursor:
+    sql = """SELECT * FROM `answers` WHERE `questionid`=%s"""
+    cursor.execute(sql, (quesid))
+    r = cursor.fetchall()
+    if r is None:
+      return None
+    return r
+  
+def get_ans_from_name(username):
+  with connection.cursor() as cursor:
+    sql = """SELECT * FROM `answers` WHERE `authorname`=%s"""
+    cursor.execute(sql, (username))
+    r = cursor.fetchall()
+    if r is None:
+      return None
+    return r
+
+def update_username(username,newusername):
+    with connection.cursor() as cursor:
+     sql = """UPDATE `users` SET `username`=%s WHERE `username`=%s"""
+     cursor.execute(sql,(newusername,username))
+     connection.commit()
+    return
+
+def update_password(username,newpassword):
+    with connection.cursor() as cursor:
+     sql = """UPDATE `users` SET `password`=%s WHERE `username`=%s"""
+     cursor.execute(sql,(newpassword,username))
+     connection.commit()
+    return
+
+def update_location(username,newlocation):
+    with connection.cursor() as cursor:
+     sql = """UPDATE `users` SET `location`=%s WHERE `username`=%s"""
+     cursor.execute(sql,(newlocation,username))
+     connection.commit()
+    return
+
+def update_userrating(username,newuserrating):
+    with connection.cursor() as cursor:
+     sql = """UPDATE `users` SET `userrating`=%s WHERE `username`=%s"""
+     cursor.execute(sql,(newuserrating,username))
+     connection.commit()
+    return
+
+
+
+
+def add_answer(question):
+
+  with connection.cursor() as cursor:
+
+     sql = f"INSERT INTO answers (authorname,body,questionid)VALUES (%s,%s,%s)"
+     
+     cursor.execute(sql, (question["username"],question["ans"],question["questionid"]))
      connection.commit()
      return True
 
-    
-def get_questions_from_title(title):
+
+def upvote(question):
+
   with connection.cursor() as cursor:
-    sql = """SELECT * FROM `questions2` WHERE `title`=%s"""
-    cursor.execute(sql, (title))
+      
+     sql = f"UPDATE `questions` SET `upvotes` = `upvotes`+1 WHERE `questionid`=%s"
+     print(sql)
+     print(question["questionid"])
+     cursor.execute(sql, (question["questionid"]))
+     connection.commit()
+     return True
+
+def downvote(question):
+
+  with connection.cursor() as cursor:
+      
+     sql = f"UPDATE `questions` SET `upvotes` = `upvotes`-1 WHERE `questionid`=%s"
+     cursor.execute(sql, (question["questionid"]))
+     connection.commit()
+     return True
+
+
+    
+def add_question(question):
+
+  with connection.cursor() as cursor:
+      
+     sql = f"INSERT INTO questions (title,body,authorname)VALUES (%s,%s,%s)"
+     cursor.execute(sql, (question["title"],question["body"],question["authorname"]))
+     connection.commit()
+     return True
+def add_follow(follow):
+    with connection.cursor() as cursor:
+      
+     sql = f"INSERT INTO followers (followername,followeename)VALUES (%s,%s)"
+     cursor.execute(sql, (follow["followername"],follow["followeename"]))
+     connection.commit()
+     return True
+def get_followers(followee):
+  with connection.cursor() as cursor:
+    sql = """SELECT `followername` FROM `followers` WHERE `followeename`=%s"""
+    cursor.execute(sql,(followee))
     r = cursor.fetchall()
+    return r
+
+def get_followees(follower):
+  with connection.cursor() as cursor:
+    sql = """SELECT `followeename` FROM `followers` WHERE `followername`=%s"""
+    cursor.execute(sql,(follower))
+    r = cursor.fetchall()
+    return r
+
+
+def get_questions_from_title(title,name):
+  with connection.cursor() as cursor:
+    sql = """SELECT * FROM `questions` WHERE `questionid`=%s"""
+    cursor.execute(sql, (title))
+    r = cursor.fetchone()
+    print(r["authorname"])
+    print(name)
+    if r["authorname"] == name:
+        r["status"] = True
+        
+    else:
+        r["status"] = False
+    sql = """SELECT * FROM `answers` WHERE `questionid`=%s"""
+    cursor.execute(sql, (title))
+    r1 = cursor.fetchall()
+    r["answers"] = r1
     return r
 
 def get_questions_from_name(username):
   with connection.cursor() as cursor:
-    sql = """SELECT * FROM `questions2` WHERE `maker`=%s"""
+    sql = """SELECT * FROM `questions` WHERE `authorname`=%s"""
     cursor.execute(sql, (username))
     r = cursor.fetchall()
     return r
 
+
+
+
+
+
+
+
 def clear():
     with connection.cursor() as cursor:
      print("lskjdf")
-     sql = """DELETE FROM `questions2` WHERE `questionid`='' OR `questionid` IS NULL"""
+     sql = """DELETE FROM `questions` WHERE `questionid`='' OR `questionid` IS NULL"""
      cursor.execute(sql)
     return 
 def get_questions():
     with connection.cursor() as cursor:
-     sql = """SELECT * FROM `questions2`"""
+     sql = """SELECT * FROM `questions` ORDER BY questionid DESC LIMIT 15"""
      cursor.execute(sql)
      r = cursor.fetchall()
     return r
@@ -197,6 +343,23 @@ def user_login(username):
     r = cursor.fetchone()
     return r
 
+def del_ques(title):
+    with connection.cursor() as cursor:
+     sql = """DELETE FROM `questions` WHERE `questionid`=%s"""
+     cursor.execute(sql,(title))
+     connection.commit()
+     sql = """DELETE FROM `answers` WHERE `questionid`=%s"""
+     cursor.execute(sql,(title))
+     connection.commit()
+    return 
+ 
+def del_follow(followername,followeename):
+    with connection.cursor() as cursor:
+     print("lskjdf")
+     sql = """DELETE FROM `followers` WHERE `followername`=%s and `followeename`=%s"""
+     cursor.execute(sql,(followername,followeename))
+     connection.commit()
+    return 
 """
 def get_tag_from_id(id: int) -> Optional[Tag]:
   with connection.cursor() as cursor:

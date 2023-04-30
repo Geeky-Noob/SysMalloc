@@ -15,12 +15,14 @@
           <div class="nav-image" align-items-center>
             <img src="assets/logo.png" alt="SysMalloc" />
           </div>
-          <p class="nav-name"><a href="users_page.html">SysMalloc</a></p>
+          <p class="nav-name"><a href="all_questions_page.html">SysMalloc</a></p>
         </div>
         <div class="nav-search">
-          <input class="search" type="text" placeholder="Search" />
+          <form class="search_bar_form" onsubmit="return search_bar(event)">
+            <input class="search" type="text" placeholder="Search" name="search"/>
+          </form>
         </div>
-        <p class="nav-username">Username</p>
+        <a class="nav-username" href="user_profile_page.html">username</a>
         <div class="medal" align-items-center>
             <img src="assets/medal.png" alt="SysMalloc" />
           </div>
@@ -44,36 +46,59 @@
                 </li>
         </div>
         <div class="main_content_particularquestion">
-            <div class="question">
-                <p class="questiontitle">Question Title</p>
+          <div class="question">
+            <p class="questiontitle">Question Title</p>
+        </div>
+        
+        <div class="upvote"><img src="assets/upvote.png" id="upvoteimg" onclick="changeImage(1)" /></div>
+        <div class="number"><p class="number_of_upvotes">0</p></div>
+        <div class="downvote"><img src="assets/downvote.png" id="downvoteimg" onclick="changeImage(2)" /></div> 
+        <div class="ques_content">Detailed Question</div>
+        <button class="delete_ques" onclick="return delete_ques()">Delete</button>
+
+            <div class="ML-api">
+              <!-- <div class="translate">Translate to: </div> -->
+              <button type="submit" class="translate" onclick="translate_text()">Translate</button>
+              <!-- <form>
+                <input type="text" onsubmit=""/>
+                <button type="submit" class="translate">Translate</button>
+              </form> -->
             </div>
+        <div class="post_ans">Post your answer</div>
+        <form class="post_ans_form" onsubmit="return post_ans_func(event)">
+          <textarea type="text" class="post_ans_label" id="post_ans" name="post_ans"></textarea>
+          <button class="post_ans_btn" type="submit">Post your answers</button>
+        </form>
+       <div class="answer_full" >
+        <!-- <div class="particular_ans_to_ques"> -->
+            <!-- <div class="answer1">
+              These are answers to given question
+            </div> -->
+              <!-- <div class="upvote1"><img src="assets/upvote.png" id="upvoteimgans" width="20" height="20" onclick="changeImage2(1)" /></div> -->
+          <!-- <div class="number1"><p class="number_of_upvotes">0</p></div> -->
+          <!-- <div class="downvote1"><img src="assets/downvote.png" id="downvoteimgans" width="20" height="20" onclick="changeImage2(2)" /></div> -->
+        <!-- </div> -->
+      </div>
            
-            <div class="upvote"><img src="assets/upvote.png" onclick="changeImage1(this)" /></div>
-            <script>
-                function changeImage1(image) {
-                    console.log(1)
-                    image.src = "assets/upvoteonclick.png";
-                }
-                function changeImage2(image) {
-                    image.src = "assets/downvoteonclick.png";}
-                function changeImage3(image){
-                    image.src= "assets/bookmark_clicked.png";
-                }
-            </script>
-            <div class="number"><p class="number_of_upvotes">0</p></div>
-            <div class="downvote"><img src="assets/downvote.png" onclick="changeImage2(this)" /></div>  
-            <div class="bookmark"><img src="assets/bookmark.png" onclick="changeImage3(this)" /></div>
-            <div class="ques_content">Detailed Question</div>
-            <div class="post_ans">Post your answer</div>
+      <!-- <script>
+        
+               
+      </script> -->
+            <!-- <div class="ques_content">Detailed Question</div> -->
+
+
+            
+            
+            <!-- <div class="post_ans">Post your answer</div>
             <form class="post_ans_form" onsubmit="return post_ans(event)">
-              <input type="text" class="post_ans_label" name="post_ans"/>
+              <textarea name="post_ans" id="post_ans" class="post_ans_label"></textarea>
               <button class="post_ans_btn" type="submit">Post your answer</button>
             </form>
             <div class="answers">
               <div class="particular_ans">
                   This is one answer!
               </div>
-            </div>
+            </div> -->
         </div>
       </div>
       <footer>

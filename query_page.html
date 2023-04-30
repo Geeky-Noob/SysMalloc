@@ -18,9 +18,9 @@
           <p class="nav-name"><a href="all_questions_page.html">SysMalloc</a></p>
         </div>
         <div class="nav-search">
-          <form class="search_bar_form" onsubmit="return search_bar(event)">
-          <input class="search" type="text" placeholder="Search" name="search"/>
-        </form>
+            <form class="search_bar_form" onsubmit="return search_bar(event)">
+                <input class="search" type="text" placeholder="Search" name="search"/>
+              </form>
         </div>
         <a class="nav-username" href="user_profile_page.html">username</a>
         <div class="medal" align-items-center>
@@ -33,7 +33,7 @@
       <div class="sidebar">
           <ul>
               <li>
-                  <a href="#" class="active">
+                  <a href="all_questions_page.html" class="active">
                       <span class="icon"><i class="questions"></i></span>
                       <span class="item">Questions</span>
                   </a>
@@ -46,24 +46,24 @@
               </li>
       </div>
       <div class="main_content">
-        <p class="top_ques">All Questions</p>
+        <p class="top_ques">Search results</p>
         <button class="ask_ques"><a href="ask_question_page.html">Ask Question</a></button>
-        <div class="total_ques"><div class="total_ques_output">1</div> Questions</div>
-        <div class="order_btns">
+        <!-- <div class="total_ques"><div class="total_ques_output">1</div> Questions</div> -->
+        <!-- <div class="order_btns">
           <button class="newest" onclick="return sort_newest()">Newest</button>
           <button class="unanswered" onclick="return sort_unanswered()">Unanswered</button>
           <button class="score" onclick="return sort_score()">Score</button>
-        </div>
+        </div> -->
         <div class="parent_ques">
-          <div class="particular_ques">
+          <div class="particular_query_ques">
               <div class="ques_left">
-                <div class="ques_upvotes"><div class="ques_votes_output">0</div> votes</div>
-                <!-- <div class="ques_downvotes"><div class="ques_downvotes_output">0</div>downvotes</div> -->
+                <div class="ques_upvotes"><div class="ques_upvotes_output">0</div> upvotes</div>
+                <div class="ques_downvotes"><div class="ques_downvotes_output">0</div>downvotes</div>
                 <div class="ques_answers"><div class="ques_answers_output">0</div> answers</div>
               </div>
               <div class="ques_right">
                 <div class="ques_title"><div class="q_link" onclick="return get_particular_ques('Title')">Title </div></div>
-                <!-- <div class="ques_tags">Tags</div> -->
+                <div class="ques_tags">Tags</div>
                 <div class="ques_askedby">asked by :<div class="ques_askedby_output"></div></div>
               </div>
           </div>

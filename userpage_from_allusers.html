@@ -16,10 +16,12 @@
         <div class="nav-image" align-items-center>
           <img src="assets/logo.png" alt="SysMalloc" />
         </div>
-        <p class="nav-name"><a href="users_page.html">SysMalloc</a></p>
+        <p class="nav-name"><a href="all_questions_page.html">SysMalloc</a></p>
       </div>
       <div class="nav-search">
-        <input class="search" type="text" placeholder="Search" />
+        <form class="search_bar_form" onsubmit="return search_bar(event)">
+          <input class="search" type="text" placeholder="Search" name="search"/>
+        </form>
       </div>
       <a class="nav-username" href="user_profile_page.html">username</a>
       <div class="medal" align-items-center>
@@ -45,21 +47,20 @@
         </li>
     </div>
     <div class="main_content">
-      <button class="follow" type="submit" onclick="return follow()"> Follow </button>
+      <button class="follow" type="submit" onclick="return follow('user')"> Follow </button>
       <div class="user_content">
         <div class="user_image"><img src="assets/default.png" /></div>
         <div class="user_details">
-          <div class="display_name">Username</div>
+          <div class="display_user">Username</div>
           <p class="location">Location</p>
           <p class="reputation">Reputation</p>
         </div>
       </div>
-      <div class="buttons">
+      <!-- <div class="buttons">
         <button class="followers" onclick="usersfollow()">Followers</button>
         <button class="following" onclick="usersfollowing()">Following</button>
         <button class="feed" onclick="usersfeed()">Feed</button>
-        <button class="bookmarks" onclick="usersbookmarks()">Bookmarks</button>
-      </div>
+      </div> -->
       <div class="stats">
         <div class="heading_stats">Stats</div>
         <div class="box1">
